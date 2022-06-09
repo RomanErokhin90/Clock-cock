@@ -2,14 +2,16 @@ import React, {useState, useEffect} from "react";
 
 
 
-function Hui() {
-setInterval(() => {
-  
-    console.log("hui")
-}, interval);
-}
+
 
 function App() {
+
+  useEffect(() => {
+    let Int = setInterval(() => {
+      document.title = `Вы нажали ${timeup} раз`;  
+    }, 1000);
+    
+  });
 
 
 
@@ -22,8 +24,14 @@ function App() {
 
         
 
+        <button onClick={() => 
+          setTimeup(timeup + 1)
+          }>
+          Старт
+        </button>
+
         <button onClick={() => setTimeup(timeup + 1)}>
-          Хуй
+          Стоп
         </button>
     </div>
   );
