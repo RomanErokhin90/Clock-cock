@@ -1,36 +1,41 @@
-import React, {useState, useEffect} from "react";
-
-
-
-
+import React, {useState, useEffect, useContext} from "react";
+import '../src/styles/App.css'
 
 function App() {
+   const [time, setTime] = useState(0);
+   const [timerBool, setTimerBool] = useState(false)
 
-  useEffect(() => {
-    let Int = setInterval(() => {
-      document.title = `Вы нажали ${timeup} раз`;  
-    }, 1000);
-    
-  });
+    let timerId; 
 
+   
+   function Starttime() {
+      timerId = setInterval(() => {  
+        setTime(time + 1)
+      }, 1000);
+   }
 
+   console.log(time)
 
-  const [timeup, setTimeup] = useState(0);
+   function Stoptime() {
+    clearInterval(timerId)
+   }
 
-
+ 
   return (
     <div className="App">
-        <h1>{timeup}</h1>
-
-        
-
-        <button onClick={() => 
-          setTimeup(timeup + 1)
-          }>
+        <div className="timebox">{time}</div>     
+        <button onClick={() => {
+          Starttime()
+          setTimerBool(true)
+          }
+        }>
           Старт
         </button>
-
-        <button onClick={() => setTimeup(timeup + 1)}>
+        <button onClick={() => {
+          Stoptime()
+          setTimerBool(false)
+          }
+        }>
           Стоп
         </button>
     </div>
