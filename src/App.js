@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import '../src/styles/App.css'
 
 function App() {
@@ -10,15 +10,15 @@ function App() {
   useEffect(() => {
       if (booltimer)
       {
-         let timerId = setInterval(() => {
+         let timerId = setTimeout(() => {
             setTime(time + 1);
             console.log(time+1)
-          }, 100);
-          return () => clearInterval(timerId)
+          }, 1000);
+          return () => clearTimeout(timerId)
       }
   }, [time,booltimer]);
 
-  function formattime (t1) {
+  function formattime(t1) {
     let t2;
     let s =~~(t1/60);
     let m =t1 % 60;
