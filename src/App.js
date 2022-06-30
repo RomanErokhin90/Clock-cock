@@ -1,42 +1,59 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import '../src/styles/App.css'
 
 function App() {
-   const [time, setTime] = useState(0);
-   const [timerBool, setTimerBool] = useState(false)
+  let timerId;
+  const [time, setTime] = useState(0);
+  const [booltimer, setBoolTimer] = useState(false);
 
-    let timerId; 
 
-   
-   function Starttime() {
-      timerId = setInterval(() => {  
-        setTime(time + 1)
-      }, 1000);
-   }
+  useEffect(() => {
+      if (booltimer)
+      {
+         let timerId = setInterval(() => {
+            setTime(time + 1);
+            console.log(time+1)
+          }, 100);
+          return () => clearInterval(timerId)
+      }
+  }, [time,booltimer]);
 
-   console.log(time)
-
-   function Stoptime() {
-    clearInterval(timerId)
-   }
+  function formattime (t1) {
+    let t2;
+    let s =~~(t1/60);
+    let m =t1 % 60;
+    if (s < 10) {s = '0'+s}
+    if (m < 10) {m = '0'+m}
+    t2 =s +':' + m
+    return t2
+  }
 
  
+
   return (
-    <div className="App">
-        <div className="timebox">{time}</div>     
+    <div className="App">   
+        <div className="timebox">{formattime(time)}</div> 
+        {booltimer === false &&
         <button onClick={() => {
-          Starttime()
-          setTimerBool(true)
-          }
-        }>
+          setBoolTimer(true)
+          }}>
           Старт
-        </button>
+       </button>
+        } 
+       {booltimer &&
         <button onClick={() => {
-          Stoptime()
-          setTimerBool(false)
-          }
-        }>
+          clearInterval(timerId)
+          setBoolTimer(false)
+        }}>
           Стоп
+        </button>
+        }
+        <button onClick={() => {
+          clearInterval(timerId)
+          setBoolTimer(false)
+          setTime(0)
+        }}>
+          Reset
         </button>
     </div>
   );
